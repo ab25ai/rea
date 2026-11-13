@@ -1,0 +1,8 @@
+{
+  "name": "Minz Agent",
+  "short_name": "Minz",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f1115",
+  "theme_color": "#0f1115"
+}

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f7f8f4">
+  <title>Stocky — Personal equity research</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="Stocky home"><span class="brand-mark">S</span><span>stocky<span class="brand-dot">.</span></span></a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-item active" data-view="overview"><span class="nav-icon">▦</span> Overview</button>
+        <button class="nav-item" data-view="screener"><span class="nav-icon">⌕</span> Stock screener</button>
+        <button class="nav-item" data-view="watchlist"><span class="nav-icon">☆</span> Watchlist <span class="nav-count" id="watchCount">0</span></button>
+        <button class="nav-item" data-view="portfolio"><span class="nav-icon">◫</span> Portfolio <span class="nav-count" id="portfolioCount">0</span></button>
+        <button class="nav-item" data-view="research"><span class="nav-icon">⌕</span> Research list</button>
+        <button class="nav-item" data-view="kuku"><span class="nav-icon">✳</span> Kuku chat</button>
+      </nav>
+      <div class="side-rule"></div>
+      <div class="workspace-label">YOUR RESEARCH</div>
+      <button class="nav-item" id="importSide"><span class="nav-icon">↥</span> Import CSV</button>
+      <button class="nav-item" id="exportSide"><span class="nav-icon">↧</span> Export results</button>
+      <div class="sidebar-bottom"><div class="local-badge"><span class="local-pulse"></span> Private workspace</div><p>Your data stays in this browser on this device.</p><span class="version">STOCKY · PERSONAL EDITION</span></div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar"><div class="breadcrumb"><span>Workspace</span><b>/</b><strong id="crumbTitle">Overview</strong></div><div class="topbar-right"><div class="market-pill" id="marketPill"><span class="market-dot"></span> DEMO DATA</div><button class="avatar" aria-label="Personal workspace">A</button></div></header>
+      <div class="page-wrap">
+        <section class="page-heading"><div><div class="eyebrow" id="pageEyebrow">YOUR INVESTING WORKSPACE</div><h1 id="pageTitle">Make research <em>clearer.</em></h1><p id="pageSubtitle">A calm place to explore company fundamentals and build your watchlist.</p></div><button class="button button-primary" id="newScreenBtn"><span>＋</span> New screen</button></section>
+        <div class="data-note"><span class="note-icon">i</span><span><strong>Sample data:</strong> the figures below are illustrative and are not live market data. Import your own CSV to use real financial data.</span><button class="note-close" aria-label="Dismiss note">×</button></div>
+
+        <section class="stats-grid" id="statsGrid">
+          <article class="stat-card"><div class="stat-label">COMPANIES TRACKED <span class="stat-icon">▤</span></div><div class="stat-value" id="statCompanies">—</div><div class="stat-foot">In this sample dataset</div></article>
+          <article class="stat-card"><div class="stat-label">WATCHLIST <span class="stat-icon green">☆</span></div><div class="stat-value" id="statWatch">—</div><div class="stat-foot">Saved on this device</div></article>
+          <article class="stat-card"><div class="stat-label">AVERAGE ROCE <span class="stat-icon blue">↗</span></div><div class="stat-value" id="statRoce">—</div><div class="stat-foot">Across visible companies</div></article>
+          <article class="stat-card"><div class="stat-label">SCREENER STATUS <span class="stat-icon amber">⌕</span></div><div class="stat-value stat-status">Ready</div><div class="stat-foot">Set criteria to narrow results</div></article>
+        </section>
+
+        <section class="market-strip"><div class="market-copy"><span class="market-symbol">IND</span><div><strong>Indian equities</strong><small>Personal research · fundamentals first</small></div></div><div class="market-meta"><span class="market-live-dot"></span><span>Offline workspace</span><i></i><span id="todayLabel"></span></div></section>
+
+        <section class="portfolio-view" id="portfolioView" hidden>
+          <div class="portfolio-actions"><div><div class="eyebrow">PRIVATE · STORED IN THIS BROWSER</div><h2>Holdings snapshot</h2><p id="portfolioAsOf">Import a holdings CSV to get started.</p></div><div class="portfolio-buttons"><a class="button button-quiet" href="sample-portfolio.csv" download>↓ CSV template</a><button class="button button-primary" id="portfolioImportBtn"><span>＋</span> Import holdings</button></div></div>
+          <div class="portfolio-empty" id="portfolioEmpty"><div class="portfolio-empty-icon">◫</div><h3>Your portfolio, in your hands.</h3><p>Import holdings for your stocks, ETFs, and mutual funds. Stocky calculates invested value, current value, gains, and asset allocation on this device.</p><button class="button button-primary" id="emptyPortfolioImport"><span>＋</span> Choose a CSV file</button><div class="statement-hint"><strong>Using Paytm Money?</strong> Request a Portfolio Holding Statement from the app. Paytm currently emails this statement as a PDF; Stocky’s first importer accepts CSV. Your password and OTP are not needed here.<a href="https://www.paytmmoney.com/care/account-statements" target="_blank" rel="noreferrer">Paytm Money statement help ↗</a></div></div>
+          <div class="portfolio-summary" id="portfolioSummary" hidden>
+            <div class="portfolio-kpis"><article class="portfolio-kpi"><span>PORTFOLIO VALUE</span><strong id="portfolioValue">—</strong><small>From imported prices</small></article><article class="portfolio-kpi"><span>INVESTED</span><strong id="portfolioInvested">—</strong><small>Units × average cost</small></article><article class="portfolio-kpi"><span>UNREALISED P&amp;L</span><strong id="portfolioPnl">—</strong><small id="portfolioPnlPct">Since average purchase cost</small></article><article class="portfolio-kpi"><span>POSITIONS</span><strong id="portfolioPositions">—</strong><small>Across stocks, ETFs &amp; funds</small></article></div>
+            <div class="portfolio-columns"><div class="portfolio-holdings panel-card"><div class="panel-heading"><div><div class="eyebrow">YOUR POSITIONS</div><h2>Holdings</h2></div><button class="text-button" id="portfolioExportBtn">Export CSV ↓</button></div><div class="table-scroll"><table><thead><tr><th class="company-col">INVESTMENT</th><th>TYPE</th><th>UNITS</th><th>AVG. COST</th><th>PRICE / NAV</th><th>VALUE</th><th>GAIN / LOSS</th></tr></thead><tbody id="portfolioRows"></tbody></table></div></div><div class="allocation-card panel-card"><div class="eyebrow">ASSET MIX</div><h3>Allocation by type</h3><div id="allocationRows"></div></div></div>
+          </div>
+          <div class="portfolio-privacy">⌑ &nbsp;Only this browser stores the imported holdings. Use <strong>Export CSV</strong> to keep your own backup.</div>
+        </section>
+
+        <section class="research-view" id="researchView" hidden>
+          <div class="research-intro"><div class="eyebrow">THINGS YOU WANT TO UNDERSTAND</div><h2>Build a research list.</h2><p>Save a stock, ETF, or mutual fund to revisit. Ask Kuku for explanations based on its local model; it cannot check current news or prices.</p></div>
+          <form class="research-form" id="researchForm"><label>Investment name<input id="researchName" required placeholder="e.g. company or fund name"></label><label>Symbol / ISIN <span class="optional-label">optional</span><input id="researchSymbol" placeholder="NSE symbol, fund code, or ISIN"></label><label>Type<select id="researchType"><option>Stock</option><option>ETF</option><option>Mutual fund</option></select></label><button class="button button-primary" type="submit">＋ Add to list</button><button class="button button-quiet" id="researchNavLookup" type="button">↗ Current NAV</button></form><div class="nav-lookup-status" id="researchNavStatus" role="status" aria-live="polite"></div>
+          <div class="research-list panel-card"><div class="panel-heading"><div><div class="eyebrow">SAVED FOR LATER</div><h2>Research list</h2></div><span id="researchCount" class="research-count">0 saved</span></div><div id="researchRows"></div></div>
+          <div class="research-note"><strong>Stocky does not have a live market-data feed.</strong> Portfolio price and NAV figures come from your CSV import. Kuku can explain general concepts but cannot check current public sources. Verify current information independently.</div>
+        </section>
+
+        <section class="kuku-view" id="kukuView" hidden>
+          <div class="kuku-disclosure"><div class="kuku-spark">✳</div><div class="kuku-disclosure-copy"><strong>Kuku is an AI research companion, not a registered investment adviser.</strong><span>It can explain your portfolio and weigh evidence and scenarios. It won’t tell you a guaranteed buy/sell decision or place trades.</span></div><a href="https://www.sebi.gov.in/legal/regulations/nov-2025/securities-and-exchange-board-of-india-investment-advisers-regulations-2013-and-securities-last-amended-on-november-25-2025-_98246.html" target="_blank" rel="noreferrer">Why this boundary ↗</a></div>
+          <div class="kuku-workspace">
+            <div class="kuku-toolbar"><div class="kuku-online"><span class="kuku-status-dot" id="kukuStatusDot"></span><span id="kukuStatusText">Checking local setup…</span></div><div class="kuku-options"><span class="kuku-switch kuku-unavailable" id="webResearch" title="Internet research is not connected in local Ollama mode.">⌕ Web search not connected</span><span class="kuku-switch kuku-unavailable" id="navLookup" title="AMFI fund NAV lookup is not configured yet.">◌ Fund NAV not ready</span><label class="kuku-switch"><input type="checkbox" id="includePortfolio"><span>◫</span> Include my holdings</label><button class="kuku-new" id="clearKuku" type="button">＋ New chat</button></div></div>
+            <div class="kuku-setup" id="kukuSetup" hidden><div class="setup-orbit">✳</div><h2>Connect Kuku to Ollama.</h2><p>Ollama runs the model on this computer. Kuku does not need an OpenAI key or paid API.</p><ol><li>Open the Ollama app and leave it running.</li><li>In PowerShell, run <code>ollama run gpt-oss:20b</code> once if the model is not installed.</li><li>Restart Stocky and return to Kuku.</li></ol><div class="setup-privacy">Questions and optional holdings are sent only to Ollama at 127.0.0.1 on this computer. Local answers do not include live news or prices.</div></div>
+            <div class="kuku-chat" id="kukuChat" hidden><div class="kuku-messages" id="kukuMessages" aria-live="polite" aria-relevant="additions text"><div class="kuku-welcome"><div class="welcome-mark">✳</div><h2>Hi, I’m Kuku.</h2><p>Ask me to explain your imported holdings or investing concepts. I run locally through Ollama and can use optional web sources, current AMFI mutual-fund NAVs, and local voice input when configured.</p><div class="suggestion-chips"><button type="button" data-prompt="Summarise my portfolio exposure and key concentration risks.">Summarise portfolio risks</button><button type="button" data-prompt="What is the latest NAV and source for my HDFC Index Fund? Use current fund data if available.">Check mutual fund NAV</button><button type="button" data-prompt="Compare the case for holding versus reducing my largest position. Show both sides and the main uncertainties.">Compare both sides</button></div></div></div><form class="kuku-composer" id="kukuForm"><textarea id="kukuInput" rows="1" maxlength="4000" placeholder="Ask Kuku anything about your investments…" required></textarea><div class="composer-controls"><div class="composer-left"><button class="voice-button" id="voiceButton" type="button" aria-label="Voice input is not connected" disabled title="Voice transcription is not set up in local mode"><span>🎙</span><span id="voiceButtonLabel">Voice not set up</span></button><span class="voice-status" id="voiceStatus" aria-live="polite"></span></div><button class="send-button" id="sendKuku" type="submit" aria-label="Send question">↑</button></div></form><div class="kuku-privacy-note">Kuku sends your question to Ollama running on this computer. Imported holdings are included only when you turn on <strong>Include my holdings</strong>. Optional web research and AMFI fund NAV lookups are fetched through configured local services and shown as source-marked data. Chat history is not saved after you close this page.</div></div>
+          </div>
+        </section>
+
+        <section class="content-grid">
+          <div class="results-panel">
+            <div class="panel-heading"><div><div class="eyebrow">DISCOVER</div><h2 id="tableTitle">Companies to explore</h2></div><button class="text-button" id="showAllBtn">View all <span>→</span></button></div>
+            <div class="toolbar"><label class="search-box"><span>⌕</span><input type="search" id="searchInput" placeholder="Search companies or symbols…" autocomplete="off"><kbd>⌘ K</kbd></label><button class="filter-toggle" id="filtersToggle">☷ <span>Filters</span><b id="filterBadge" hidden>0</b></button><select id="sortSelect" class="sort-select" aria-label="Sort companies"><option value="marketCap">Market cap ↓</option><option value="roe">ROE ↓</option><option value="roce">ROCE ↓</option><option value="pe">P/E ↑</option><option value="name">Name A–Z</option></select></div>
+            <div class="filter-drawer" id="filterDrawer" hidden><label>Max P/E <input type="number" id="maxPe" min="0" placeholder="Any"></label><label>Min ROCE % <input type="number" id="minRoce" min="0" placeholder="Any"></label><label>Min market cap (₹ Cr) <input type="number" id="minCap" min="0" placeholder="Any"></label><button id="clearFilters" class="clear-button">Clear filters</button></div>
+            <div class="active-filters" id="activeFilters"></div>
+            <div class="table-scroll"><table><thead><tr><th class="company-col">COMPANY</th><th>PRICE <small>₹</small></th><th>MARKET CAP <small>₹ Cr</small></th><th>P/E</th><th>ROCE</th><th>ROE</th><th></th></tr></thead><tbody id="stockRows"></tbody></table></div>
+            <div class="table-footer"><span id="resultCount">Showing 0 companies</span><span>Figures are illustrative</span></div>
+          </div>
+          <aside class="right-rail">
+            <section class="watch-card"><div class="rail-heading"><div><div class="eyebrow">KEEP AN EYE ON</div><h3>Your watchlist</h3></div><button class="icon-button" id="watchlistLink" aria-label="Open watchlist">↗</button></div><div id="watchlistPreview" class="watchlist-preview"></div><button class="watch-add" id="addWatchPrompt"><span>＋</span> Add a company</button></section>
+            <section class="tip-card"><div class="tip-icon">✳</div><div class="eyebrow">A BETTER QUESTION</div><h3>Look for the story behind the number.</h3><p>Strong returns can be a starting point. Compare them with debt, sales growth, and the company’s longer-term trend.</p><button class="tip-action" id="tipAction">Explore fundamentals <span>→</span></button></section>
+            <section class="privacy-card"><div class="privacy-lock">⌑</div><div><strong>Your research is yours.</strong><p>Watchlist and imported data are stored locally in this browser.</p></div></section>
+          </aside>
+        </section>
+        <footer class="page-footer"><span>Stocky is an independent personal research tool.</span><span>Not investment advice · Verify figures before making decisions.</span></footer>
+      </div>
+    </main>
+  </div>
+
+  <dialog id="companyDialog" class="company-dialog"><button class="dialog-close" id="dialogClose" aria-label="Close">×</button><div id="companyDetail"></div></dialog>
+  <dialog id="importDialog" class="import-dialog"><button class="dialog-close" id="importClose" aria-label="Close">×</button><div class="eyebrow">BRING YOUR OWN DATA</div><h2>Import a company CSV</h2><p class="dialog-subtitle">Your file is read in this browser and saved locally. Nothing is uploaded.</p><div class="csv-format"><strong>Expected columns</strong><code>symbol,name,price,marketCap,pe,roce,roe,salesGrowth,profitGrowth,debtToEquity,sector</code><span>Market cap values in ₹ crore; percentages as numbers (for example, 18.5).</span></div><label class="file-drop" for="csvFile"><span class="upload-symbol">↥</span><strong>Choose a CSV file</strong><span id="fileName">or drop it here</span><input id="csvFile" type="file" accept=".csv,text/csv"></label><div id="importMessage" class="import-message" role="status"></div><div class="dialog-actions"><button class="button button-quiet" id="cancelImport">Cancel</button><button class="button button-primary" id="loadSampleBtn">Restore sample data</button></div></dialog>
+  <dialog id="portfolioImportDialog" class="import-dialog"><button class="dialog-close" id="portfolioImportClose" aria-label="Close">×</button><div class="eyebrow">IMPORT YOUR HOLDINGS</div><h2>Portfolio CSV</h2><p class="dialog-subtitle">Read and saved locally in this browser. No upload or account login.</p><div class="csv-format"><strong>Required: symbol, name, type, plus units and price/value</strong><code>symbol,name,type,units,averageCost,currentPrice,investment,marketValue,sector,isin,asOfDate</code><span>type is Stock, ETF, or Mutual fund. Use units for shares or fund units; averageCost and currentPrice are ₹ per unit (NAV for funds). Use investment and marketValue to preserve exact statement totals when available.</span></div><label class="file-drop" for="portfolioCsvFile"><span class="upload-symbol">↥</span><strong>Choose holdings CSV</strong><span id="portfolioFileName">or drop it here</span><input id="portfolioCsvFile" type="file" accept=".csv,text/csv"></label><div id="portfolioImportMessage" class="import-message" role="status"></div><div class="dialog-actions"><button class="button button-quiet" id="portfolioCancelImport">Cancel</button></div></dialog>
+  <input id="hiddenFileInput" type="file" accept=".csv,text/csv" hidden>
+  <script src="app.js"></script>
+</body>
+</html>

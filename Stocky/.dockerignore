@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.local.example
+.git
+.gitignore
+node_modules
+npm-debug.log*
+*.csv
+!sample-portfolio.csv
+!sample-template.csv
+Paytm portfolio.csv
+my-portfolio-upload.csv
+deploy-package

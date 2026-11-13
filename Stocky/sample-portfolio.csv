@@ -1,0 +1,4 @@
+symbol,name,type,units,averageCost,currentPrice,marketValue,sector,isin,asOfDate
+EXM,Example Manufacturing,Stock,10,400,425,,Industrials,INEXM0000001,2026-11-10
+NIFTYBEES,Example Index ETF,ETF,25,250,264,,Index,,2026-11-10
+EXMF,Example Balanced Fund,Mutual fund,100,18.5,19.2,,Multi Asset,INFEXM000001,2026-11-10

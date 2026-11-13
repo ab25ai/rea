@@ -1,0 +1,23 @@
+services:
+  stocky:
+    build: .
+    image: stocky:local
+    container_name: stocky
+    restart: unless-stopped
+    environment:
+      STOCKY_PORT: "4173"
+      STOCKY_HOST: "0.0.0.0"
+      KUKU_OLLAMA_URL: ${KUKU_OLLAMA_URL:-http://host.docker.internal:11434}
+      KUKU_MODEL: ${KUKU_MODEL:-gpt-oss:20b}
+      OLLAMA_WEB_SEARCH_ENABLED: ${OLLAMA_WEB_SEARCH_ENABLED:-false}
+      OLLAMA_WEB_SEARCH_URL: ${OLLAMA_WEB_SEARCH_URL:-https://ollama.com/api/search}
+      OLLAMA_API_KEY: ${OLLAMA_API_KEY:-}
+      WHISPER_TRANSCRIBE_URL: ${WHISPER_TRANSCRIBE_URL:-}
+    networks:
+      - server_proxy
+    # No published host port: all LAN access goes through Caddy.
+
+networks:
+  server_proxy:
+    external: true
+    name: server_proxy

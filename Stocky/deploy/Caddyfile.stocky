@@ -1,0 +1,5 @@
+# Add this site block to the existing Caddyfile on the server.
+# Caddy must share the external Docker network named `server_proxy` with Stocky.
+http://192.168.0.192 {
+    reverse_proxy stocky:4173
+}
